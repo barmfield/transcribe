@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Transcribe</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  </head>
+  <body>
+    <div class="container">
+        <h1>Transcribe</h1>
+    </div>
+
+    <div class="container">
+      <textarea readonly id="chatwindow" name="textinput" rows="15" cols="80"></textarea><br>
+    </div>
+
+    <br>
+
+    <div class="container">
+      <form class="">
+        <button onclick="getText()"id="submitbutton" type="button" class="btn btn-primary" name="button">Get Transcribed Text</button>
+      </form>
+    </div>
+  </body>
+  <script>
+    const chatWindow = document.querySelector("#chatwindow");
+    const subButton = document.querySelector("#submitbutton");
+
+    function getText() {
+      const job_url = "https://jntbmmdzhi.execute-api.us-east-1.amazonaws.com/prod/upload-transcribe/{object}";
+
+      // Start transcribe job
+      fetch(job_url,{method: "GET"})
+      .then((res) => res.json())
+      .then((data) => {
+
+        // set job_name globally
+        const job_name = data.body
+
+        console.log("Processing Transcribe Job");
+        setTimeout(function(){
+            console.log("Sending Request");
+            console.log(job_name)
+            const s3_url = "https://823mdaf6hg.execute-api.us-east-1.amazonaws.com/prod"
+
+            const data = {"jobName": job_name}
+
+            // search s3 for transcribed text
+            fetch(s3_url,{
+              method: "post",
+              headers: {
+                "content-type": "application/json"
+              },
+              body: JSON.stringify(data)
+            })
+            .then((result) => result.json())
+            .then((data) => {
+              console.log(data);
+              chatWindow.value += "Transcribed Text: "+ data.body + "\n\n";
+            })
+            chatWindow.scrollTo(0, chatWindow.scrollHeight);
+      },70000)
+      })
+    }
+
+  </script>
+</html>
