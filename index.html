@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Simple WebAudioRecorder.js demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css">
+  </head>
+  <body>
+  	<h1>Transcribe demo</h1>
+
+    <div class="container">
+      <textarea readonly id="chatwindow" name="textinput" rows="15" cols="80"></textarea><br>
+    </div>
+
+    <br>
+
+    <!-- <div class="container">
+      <form class="">
+        <button onclick="getText()"id="submitbutton" type="button" class="btn btn-primary" name="button">Get Transcribed Text</button>
+      </form>
+    </div> -->
+	<!-- <p>Convert recorded audio to:<br>
+	<select id="encodingTypeSelect">
+	  <option value="wav">Waveform Audio (.wav)</option>
+	  <option value="mp3">MP3 (MPEG-1 Audio Layer III) (.mp3)</option>
+	  <option value="ogg">Ogg Vorbis (.ogg)</option>
+	</select>
+	</p> -->
+	<div id="controls">
+		<button id="recordButton">Record</button>
+		<button id="stopButton" disabled>Stop</button>
+	</div>
+	<div id="formats"></div>
+	<h3>Log</h3>
+	<pre id="log"></pre>
+
+	<h3>Recordings</h3>
+	<ol id="recordingsList"></ol>
+
+  	<!-- inserting these scripts at the end to be able to use all the elements in the DOM -->
+	<script src="js/WebAudioRecorder.min.js"></script>
+	<script src="js/app.js"></script>
+
+  </body>
+</html>
